@@ -1,3 +1,42 @@
 @use "./variables.scss" as *;
 
 // put your custom CSS here!
+
+// The left/right sidebar columns are empty now (Explorer, ToC, backlinks,
+// etc. are all disabled) but the grid still reserves their width. Make that
+// reserved space blend into the page instead of showing as a distinct block.
+.page > #quartz-body .sidebar {
+  background-color: var(--light) !important;
+  border: none !important;
+}
+
+// On very wide screens (>1500px) the theme letterboxes .page itself and
+// paints that outer margin with a different variable (effectively
+// --lightgray), which shows up as a distinct column outside the sidebars.
+// Force it to match the page background too.
+.page {
+  background-color: var(--light) !important;
+}
+
+// Work History page: smaller job-title headings, more breathing room
+// between the date line and the summary paragraph below it, and each job
+// treated as its own self-contained block (a divider + generous top margin
+// separating it from the next one).
+.job-history {
+  h3 {
+    font-size: 1rem;
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--lightgray);
+  }
+
+  h3:first-child {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: none;
+  }
+
+  h3 + p {
+    margin-bottom: 1.5rem;
+  }
+}

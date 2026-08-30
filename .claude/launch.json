@@ -1,0 +1,16 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "burhan-site",
+      "url": "http://localhost:8001",
+      "port": 8001
+    },
+    {
+      "name": "quartz",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["quartz/bootstrap-cli.mjs", "build", "--serve"],
+      "port": 8080
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "name": "nav",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Simple top nav bar with Home and Work History links",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js"
+    },
+    "./components": {
+      "import": "./dist/components/index.js"
+    }
+  },
+  "quartz": {
+    "name": "nav",
+    "displayName": "Site Nav",
+    "description": "Simple top nav bar with Home and Work History links",
+    "version": "1.0.0",
+    "category": "component",
+    "defaultOrder": 50,
+    "defaultEnabled": true,
+    "components": {
+      "Nav": {
+        "displayName": "Nav",
+        "defaultPosition": "header",
+        "defaultPriority": 10
+      }
+    }
+  }
+}
