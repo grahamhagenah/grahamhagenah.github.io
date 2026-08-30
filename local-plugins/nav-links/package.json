@@ -1,9 +1,9 @@
 {
-  "name": "nav",
+  "name": "nav-links",
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "Simple top nav bar with Home and Work History links",
+  "description": "Subpage links for the top nav bar",
   "exports": {
     ".": {
       "import": "./dist/index.js"
@@ -13,18 +13,18 @@
     }
   },
   "quartz": {
-    "name": "nav",
-    "displayName": "Site Nav",
-    "description": "Simple top nav bar with Home and Work History links",
+    "name": "nav-links",
+    "displayName": "Nav: Subpages",
+    "description": "Subpage links for the top nav bar",
     "version": "1.0.0",
     "category": "component",
     "defaultOrder": 50,
     "defaultEnabled": true,
     "components": {
-      "Nav": {
-        "displayName": "Nav",
+      "NavLinks": {
+        "displayName": "NavLinks",
         "defaultPosition": "header",
-        "defaultPriority": 10
+        "defaultPriority": 20
       }
     }
   }

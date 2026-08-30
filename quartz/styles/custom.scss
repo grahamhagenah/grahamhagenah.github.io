@@ -18,25 +18,194 @@
   background-color: var(--light) !important;
 }
 
-// Work History page: smaller job-title headings, more breathing room
-// between the date line and the summary paragraph below it, and each job
-// treated as its own self-contained block (a divider + generous top margin
-// separating it from the next one).
-.job-history {
-  h3 {
-    font-size: 1rem;
-    margin-top: 3rem;
-    padding-top: 2rem;
-    border-top: 1px solid var(--lightgray);
+// Slightly narrow the overall site width. .page's max-width and the
+// theme's own #quartz-body width rule both default to 1500px; both need
+// overriding (with !important, since the theme's rule wins on
+// order/specificity otherwise) to actually narrow the page.
+.page,
+.page > #quartz-body {
+  max-width: 1350px !important;
+}
+
+// At tablet width (800-1200px), the grid reserves a 320px column for the
+// (empty) left sidebar but no matching column on the right, so the content
+// column ends up wider on the right than the left — visibly off-center.
+// Since the sidebars have nothing in them at any width, drop straight to
+// the single-column stacked layout mobile already uses instead of the
+// sidebar+content split, so content spans (and centers in) the full width.
+@media (max-width: 1200px) {
+  .page > #quartz-body {
+    grid-template-columns: auto !important;
+    grid-template-rows: auto auto auto auto auto !important;
+    grid-template-areas:
+      "grid-sidebar-left"
+      "grid-header"
+      "grid-center"
+      "grid-sidebar-right"
+      "grid-footer" !important;
+    padding: 0 1.5rem !important;
   }
 
-  h3:first-child {
+  .page > #quartz-body .sidebar {
+    height: unset !important;
+    position: initial !important;
+  }
+}
+
+// Work History page: space the whole job list off from the intro text
+// above and the Education section below, and give each job a year gutter
+// on the left (title + summary in a column to its right), with clear space
+// between one job and the next (no dividers, just whitespace).
+.job-history {
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+
+  .job {
+    display: grid;
+    grid-template-columns: 8rem auto;
+    column-gap: 1.5rem;
+    margin-top: 3rem;
+  }
+
+  .job:first-child {
     margin-top: 0;
-    padding-top: 0;
-    border-top: none;
+  }
+
+  .job-year {
+    grid-column: 1;
+    grid-row: 1;
+    color: var(--gray);
+    font-size: 1rem;
+    padding-top: 0.2rem;
+  }
+
+  h3 {
+    grid-column: 2;
+    grid-row: 1;
+    font-size: 1.25rem;
+    margin: 0;
   }
 
   h3 + p {
-    margin-bottom: 1.5rem;
+    grid-column: 2;
+    grid-row: 2;
+    margin-top: 0.25rem;
+    margin-bottom: 0;
   }
+
+  @media (max-width: 600px) {
+    .job {
+      grid-template-columns: auto;
+    }
+
+    .job-year {
+      grid-column: 1;
+      grid-row: 1;
+      padding-top: 0;
+      margin-bottom: 0.25rem;
+    }
+
+    h3 {
+      grid-column: 1;
+      grid-row: 2;
+    }
+
+    h3 + p {
+      grid-column: 1;
+      grid-row: 3;
+    }
+  }
+}
+
+// More separation between the page's major sections (Work History,
+// Education, Focus Areas).
+h1,
+h2 {
+  margin-top: 3rem;
+}
+
+// Lighter h3s (base.scss defaults all headings to the browser's bold weight)
+// and slightly larger body text.
+h3 {
+  font-weight: 500;
+}
+
+// Push text color closer to the extremes (near-black in light mode,
+// near-white in dark mode). Set directly here, with !important: an
+// obsidian-compat stylesheet elsewhere redefines --dark/--darkgray via its
+// own --text-normal/--color-base-100 chain and otherwise wins the cascade,
+// silently overriding the theme colors set in quartz.config.yaml.
+:root {
+  --dark: #0a0a0a !important;
+  --darkgray: #1a1a1a !important;
+}
+
+:root[saved-theme="dark"] {
+  --dark: #f5f5f5 !important;
+  --darkgray: #e8e8e8 !important;
+}
+
+// Same override, same reason, for the link/accent color: the obsidian-compat
+// stylesheet also redefines --secondary at :root (to a purple accent),
+// overriding the emerald green set in quartz.config.yaml.
+:root {
+  --secondary: #059669 !important;
+}
+
+:root[saved-theme="dark"] {
+  --secondary: #34d399 !important;
+}
+
+a {
+  color: var(--secondary) !important;
+}
+
+// The variables alone aren't enough: the obsidian-compat stylesheet also
+// directly targets `p` (and other elements) with its own --text-muted
+// color, which beats plain inheritance from `body` regardless of
+// `body`'s !important. Target `p` directly too.
+body,
+p {
+  color: var(--darkgray) !important;
+  font-family: var(--bodyFont) !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--dark) !important;
+}
+
+p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+// Nav bar: site name on the left, subpage links + dark mode toggle grouped
+// on the right. (Declared in full, not just `justify-content`, since the
+// header component's own flex CSS isn't reliably present in the bundle.)
+// Sits a bit higher on the page than the component's own default margin.
+header {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  flex-wrap: wrap;
+  justify-content: space-between !important;
+  margin: 1rem 0 !important;
+}
+
+.site-nav-name,
+.site-nav-links a {
+  font-size: 1.15rem;
+}
+
+// The dark mode toggle's icon isn't quite centered in its own box, so even
+// with the nav row's items vertically centered, it reads a couple pixels
+// higher than the text next to it. Nudge it down to line up.
+button.darkmode {
+  position: relative;
+  top: 2px;
 }
