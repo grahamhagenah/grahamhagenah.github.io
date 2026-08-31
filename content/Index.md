@@ -1,3 +1,3 @@
 hello
 
-See my [[Work History]].
+See my [[Work|Work History]].
