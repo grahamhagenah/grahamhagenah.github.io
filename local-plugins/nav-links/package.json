@@ -1,0 +1,31 @@
+{
+  "name": "nav-links",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Subpage links for the top nav bar",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js"
+    },
+    "./components": {
+      "import": "./dist/components/index.js"
+    }
+  },
+  "quartz": {
+    "name": "nav-links",
+    "displayName": "Nav: Subpages",
+    "description": "Subpage links for the top nav bar",
+    "version": "1.0.0",
+    "category": "component",
+    "defaultOrder": 50,
+    "defaultEnabled": true,
+    "components": {
+      "NavLinks": {
+        "displayName": "NavLinks",
+        "defaultPosition": "header",
+        "defaultPriority": 20
+      }
+    }
+  }
+}
