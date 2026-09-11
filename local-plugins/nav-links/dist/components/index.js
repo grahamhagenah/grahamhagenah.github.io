@@ -12,10 +12,12 @@ const css = `
 export const NavLinks = () => {
   const SiteNavLinks = ({ fileData }) => {
     const work = resolveRelative(fileData.slug, "work")
+    const about = resolveRelative(fileData.slug, "about")
     return h(
       "div",
       { class: "site-nav-links" },
       h("a", { href: work }, "Work"),
+      h("a", { href: about }, "About"),
     )
   }
   SiteNavLinks.css = css
