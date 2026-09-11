@@ -152,6 +152,14 @@ h3 + p {
   margin-top: 0.25rem;
 }
 
+// The home page hides its title (article-title's `not-index` condition in
+// quartz.config.yaml), so its intro would sit higher under the nav than
+// other pages' titles do. Start it where those titles start (their 3rem
+// h1 margin, above) so content doesn't jump between pages.
+body[data-slug="index"] article {
+  margin-top: 3rem;
+}
+
 p {
   font-size: 1.1rem;
   line-height: 1.6;
