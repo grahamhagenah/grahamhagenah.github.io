@@ -34,6 +34,14 @@ a {
   color: var(--secondary) !important;
 }
 
+// Links between notes get a tinted "highlight" box, from both Quartz's
+// base styles and an unlayered theme rule (`body a.internal-link`). Show
+// them as plain links, same as external ones.
+a.internal {
+  background-color: transparent !important;
+  padding: 0 !important;
+}
+
 body,
 p {
   color: var(--darkgray) !important;
