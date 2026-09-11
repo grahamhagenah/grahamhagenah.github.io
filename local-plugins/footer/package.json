@@ -1,0 +1,31 @@
+{
+  "name": "footer",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Custom site footer for grahamhagenah.com",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js"
+    },
+    "./components": {
+      "import": "./dist/components/index.js"
+    }
+  },
+  "quartz": {
+    "name": "footer",
+    "displayName": "Site Footer",
+    "description": "Custom footer text with a link to the Quartz repo",
+    "version": "1.0.0",
+    "category": "component",
+    "defaultOrder": 50,
+    "defaultEnabled": true,
+    "components": {
+      "Footer": {
+        "displayName": "Footer",
+        "defaultPosition": "footer",
+        "defaultPriority": 50
+      }
+    }
+  }
+}

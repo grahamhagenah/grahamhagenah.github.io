@@ -1,0 +1,31 @@
+{
+  "name": "nav-name",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Site name, links home",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js"
+    },
+    "./components": {
+      "import": "./dist/components/index.js"
+    }
+  },
+  "quartz": {
+    "name": "nav-name",
+    "displayName": "Nav: Site Name",
+    "description": "Site name, links home",
+    "version": "1.0.0",
+    "category": "component",
+    "defaultOrder": 50,
+    "defaultEnabled": true,
+    "components": {
+      "NavName": {
+        "displayName": "NavName",
+        "defaultPosition": "header",
+        "defaultPriority": 10
+      }
+    }
+  }
+}

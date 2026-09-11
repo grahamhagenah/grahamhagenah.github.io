@@ -1,3 +1,176 @@
 @use "./variables.scss" as *;
 
 // put your custom CSS here!
+
+// ============================================================================
+// Genuine cascade conflicts — !important is load-bearing here.
+//
+// @quartz-themes/core includes an "obsidian compatibility" layer that
+// translates Obsidian CSS-theme variables into Quartz's own. That layer
+// redefines --dark / --darkgray / --secondary at :root itself, and also
+// targets body/p/headings directly with its own colors — silently
+// overriding the theme.colors block in quartz.config.yaml, which is
+// supposed to be the source of truth for these. Every rule below exists
+// only to make that documented, intended config mechanism actually win.
+// Nothing else in this file needs !important; see the plain overrides
+// further down, which rely on custom.scss being unlayered (Quartz wraps
+// its own base styles in `@layer quartz-base`, and unlayered rules always
+// beat layered ones of equal importance, regardless of order/specificity).
+// ============================================================================
+
+:root {
+  --dark: #0a0a0a !important;
+  --darkgray: #1a1a1a !important;
+  --secondary: #059669 !important;
+}
+
+:root[saved-theme="dark"] {
+  --dark: #f5f5f5 !important;
+  --darkgray: #e8e8e8 !important;
+  --secondary: #34d399 !important;
+}
+
+a {
+  color: var(--secondary) !important;
+}
+
+body,
+p {
+  color: var(--darkgray) !important;
+  font-family: var(--bodyFont) !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--dark) !important;
+}
+
+// The date line above each job title (see below) also loses its dimmed
+// color to the `body, p` rule above unless forced the same way.
+p:has(+ h3) {
+  color: var(--gray) !important;
+}
+
+// The left/right sidebar columns are empty now (Explorer, ToC, backlinks,
+// etc. are all disabled) but the grid still reserves their width. Make that
+// reserved space blend into the page instead of showing as a distinct
+// block. Needed with !important: below 800px, the theme has its own
+// same-property rule for `.sidebar.left` at equal-or-higher specificity.
+.page > #quartz-body .sidebar {
+  background-color: var(--light) !important;
+  border: none !important;
+}
+
+// Slightly narrow the overall site width. .page's max-width and the
+// theme's own #quartz-body width rule both default to 1500px; both need
+// overriding, with !important — above 1200px the theme sets this same
+// property at higher specificity (an ID-qualified selector).
+.page,
+.page > #quartz-body {
+  max-width: 1350px !important;
+}
+
+// ============================================================================
+// Everything else: plain overrides. custom.scss is unlayered, so these
+// already win over the theme's `@layer quartz-base` styles without needing
+// !important — no real conflict here, just normal styling.
+// ============================================================================
+
+// On very wide screens (>1500px) the theme letterboxes .page itself and
+// paints that outer margin with a different variable (effectively
+// --lightgray), which shows up as a distinct column outside the sidebars.
+// Match it to the page background.
+.page {
+  background-color: var(--light);
+}
+
+// At tablet width (800-1200px), the grid reserves a 320px column for the
+// (empty) left sidebar but no matching column on the right, so the content
+// column ends up wider on the right than the left — visibly off-center.
+// Since the sidebars have nothing in them at any width, drop straight to
+// the single-column stacked layout mobile already uses instead of the
+// sidebar+content split, so content spans (and centers in) the full width.
+@media (max-width: 1200px) {
+  .page > #quartz-body {
+    grid-template-columns: auto;
+    grid-template-rows: auto auto auto auto auto;
+    grid-template-areas:
+      "grid-sidebar-left"
+      "grid-header"
+      "grid-center"
+      "grid-sidebar-right"
+      "grid-footer";
+    padding: 0 1.5rem;
+  }
+
+  .page > #quartz-body .sidebar {
+    height: unset;
+    position: initial;
+  }
+}
+
+// More separation between the page's major sections (Work History,
+// Education, Focus Areas).
+h1,
+h2 {
+  margin-top: 3rem;
+}
+
+// Lighter, slightly bigger h3s (base.scss defaults all headings to the
+// browser's bold weight and a smaller size).
+h3 {
+  font-weight: 500;
+  font-size: 1.25rem;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+// Work History page: each job is plain markdown — a short date line, then
+// a heading, then a summary paragraph. Style the date line (any paragraph
+// immediately before a heading) as a small label above the title (its
+// dimmed color is forced above, alongside the other real conflicts), and
+// pull the summary paragraph right up under its title.
+p:has(+ h3) {
+  font-size: 0.9rem;
+  margin-top: 3rem;
+  margin-bottom: 0.25rem;
+}
+
+h3 + p {
+  margin-top: 0.25rem;
+}
+
+p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+// Nav bar: site name on the left, subpage links + dark mode toggle grouped
+// on the right. Sits a bit higher on the page than the component's own
+// default margin.
+header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 1rem 0;
+}
+
+.site-nav-name,
+.site-nav-links a {
+  font-size: 1.15rem;
+  font-weight: 500;
+}
+
+// The dark mode toggle's icon isn't quite centered in its own box, so even
+// with the nav row's items vertically centered, it reads a couple pixels
+// higher than the text next to it. Nudge it down to line up.
+button.darkmode {
+  position: relative;
+  top: 2px;
+}
