@@ -12,3 +12,6 @@ replit.nix
 .quartz/
 quartz/cli/tui/dist/
 .turbo/
+
+# Records absolute local paths for local plugins; breaks CI when committed
+quartz.lock.json
